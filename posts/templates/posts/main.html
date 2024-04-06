@@ -8,5 +8,6 @@
  {% endblock title %}
 
  {% block content %}
- hello world
- {% endblock content %}
+{% for obj in qs %}
+    {{obj.title}} - {{obj.body}} <br>
+{% endfor %} {% endblock content %}
