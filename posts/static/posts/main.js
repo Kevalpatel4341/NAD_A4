@@ -4,6 +4,24 @@ const postsBox = document.getElementById('posts-box')
 const spinnerBox = document.getElementById('spinner-box')
 const loadBtn = document.getElementById('load-btn')
 const endBox = document.getElementById('end-box')
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== ''){
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++){
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent{cookie.substring(name.length + 1)};
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrf_token = getCookie('csrftoken');
+
 let visible = 3
 
 const getData = () =>{
@@ -30,7 +48,10 @@ const getData = () =>{
                                     <a href="#" class="btn btn-primary">Details</a>
                                 </div>
                                 <div class="col-2">
-                                    <a href="#" class="btn btn-primary">${el.liked ? `Unlike (${el.count})`: `Like (${el.count})`}</a>
+                                    <form class="like-unlike-forms" data-form-id="${el.id}">
+                                        {% csrf_token %}
+                                        <button href="#" class="btn btn-primary">${el.liked ? `Unlike (${el.count})`: `Like (${el.count})`}</button>
+                                        </form>
                                 </div>
                             </div>
                         </div>
