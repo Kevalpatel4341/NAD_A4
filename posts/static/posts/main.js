@@ -8,8 +8,8 @@ const endBox = document.getElementById('end-box')
 const postForm = document.getElementById('post-form')
 const title = document.getElementById('id_title')
 const body = document.getElementById('id_body')
-const csrf = document.getElementById('csrfmiddlewaretoken')
-console.log('csrf', csrf)
+const csrf = document.getElementsByName('csrfmiddlewaretoken')
+console.log('csrf', csrf[0].value)
 
 const getCookie =(name) => {
     let cookieValue = null;
@@ -117,7 +117,18 @@ postForm.addEventListener('submit', e=>{
 
         $.ajax({
             type: 'POST',
-            url: ''
+            url: '',
+            data: {
+                'csrfmiddlewaretoken': csrf[0].value,
+                'title': title.value,
+                'body': body.value
+            },
+            success: function(response){
+                console.log(response)
+            },
+            error: function(error){
+                console.log(error)
+            }
         })
 })
 
